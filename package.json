@@ -2,7 +2,7 @@
   "name": "webview-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://local.khairulanshar.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
@@ -11,6 +11,7 @@
     "@types/node": "^12.20.37",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "axios": "^0.24.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
