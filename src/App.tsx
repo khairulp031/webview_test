@@ -32,6 +32,7 @@ declare global {
 function App() {
   const [text, setText] = React.useState('')
   const [data, setData] = React.useState({})
+  const [apiData, setApiData] = React.useState({})
   const [csrf, setCsrf] = React.useState()
   const [iframUrl, setIframeUrl] = React.useState<string | undefined>()
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
@@ -49,7 +50,11 @@ function App() {
     }
   }, [isWebview])
   React.useEffect(() => {
-    if (csrf) getData(csrf).then(response => console.log(response))
+    if (csrf) getData(csrf).then(response => {
+      if (response && response.data && response.data) {
+        setApiData(response.data)
+      }
+    })
   }, [csrf])
 
   React.useEffect(() => {
@@ -75,6 +80,7 @@ function App() {
       <div><strong>UserAgent</strong>: {navigator.userAgent}</div>
       <div><strong>text from Native</strong>: {text}</div>
       <div><strong>data in JSON</strong>: {JSON.stringify(data)}</div>
+      <div><strong>data From API</strong>: {JSON.stringify(apiData)}</div>
       {
         isWebview &&
         <iframe
