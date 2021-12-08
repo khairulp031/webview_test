@@ -1,23 +1,16 @@
 import React from 'react';
 import './App.css';
-import { request } from './request';
 import axios from "axios"
-//axios.defaults.headers.common['Sec-Fetch-Mode'] = 'no-cors';
 const service = axios.create({
   withCredentials: true,
   headers: {
     REQUEST_METHOD: "GET",
     "Pragma": "no-cache",
     "Cache-Control": "no-cache",
-    'Content-Type': 'application/x-www-form-urlencoded',
-    "Accept": "application/json",
-    "Sec-Fetch-Mode": "no-cors",
-    "Origin": "https://www.masstracing.com/"
   }
 })
 export const checktoken = () => {
-  return service.post(`https://www.masstracing.com/api/checktoken`, )
-  //return request("get", "abc://www.masstracing.com/api/checktoken")
+  return service.post(`https://www.masstracing.com/api/checktoken`,)
 }
 
 const isWebview = (navigator.userAgent && navigator.userAgent.toLowerCase().includes('webview'))
@@ -29,47 +22,6 @@ declare global {
   }
 }
 
-function postData(url = '', method = "GET", data = {}) {
-  return fetch(url, {
-    method, // *GET, POST, PUT, DELETE, etc.
-    mode: 'no-cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'include', // include, *same-origin, omit
-    headers: {
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Origin": "*",
-
-    },
-    //redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'strict-origin-when-cross-origin', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //body: JSON.stringify(data) // body data type must match "Content-Type" header
-  })
-}
-
-function postData1(url = '', method = "GET", data = {}) {
-  const myInit: any = {
-    method,
-    mode: 'no-cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'include', // include, *same-origin, omit
-    //redirect: 'error', // manual, *follow, error
-    referrerPolicy: 'strict-origin-when-cross-origin', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    headers: {
-      "Accept": "application/json",
-    },
-  };
-
-  const myRequest = new Request(url, myInit);
-
-  fetch(myRequest).then(function (response) {
-    return response;
-  }).then(function (response) {
-    console.log(response);
-  }).catch(function (e) {
-    console.log(e);
-  });
-}
-
 function App() {
   const [text, setText] = React.useState('')
   const [data, setData] = React.useState({})
@@ -78,23 +30,10 @@ function App() {
 
 
   React.useEffect(() => {
-    console.log(window.isReady)
-    //if (window.isReady){
-    //
-    postData1("https://www.masstracing.com/api/checktoken","post")
-    /*postData("https://www.masstracing.com/api/checktoken", "GET")
-      .then(function (rawResponse) {
-        return rawResponse
-      })
-      .then(function (rawResponse: any) {
-        console.log(rawResponse)
-        //checktoken()
-      });*/
     checktoken()
     if (isWebview) {
       setIframeUrl('abc://window.testInit?query=' + encodeURI('{}'))
     }
-    //}
   }, [window.isReady])
 
   React.useEffect(() => {
