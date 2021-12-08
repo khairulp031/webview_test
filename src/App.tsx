@@ -4,13 +4,20 @@ import axios from "axios"
 const service = axios.create({
   withCredentials: true,
   headers: {
-    REQUEST_METHOD: "GET",
+    //REQUEST_METHOD: "GET",
     "Pragma": "no-cache",
     "Cache-Control": "no-cache",
   }
 })
 export const checktoken = () => {
-  return service.post(`https://www.masstracing.com/api/checktoken`,)
+  return service.post(`https://www.masstracing.com/api/checktoken`)
+}
+
+export const getData = (csrf: string) => {
+  return service.get(`https://www.masstracing.com/api/location/company/1/5/${encodeURIComponent("@")}`, 
+  {
+    headers: { "Authorization": csrf }
+  })
 }
 
 const isWebview = (navigator.userAgent && navigator.userAgent.toLowerCase().includes('webview'))
@@ -25,16 +32,25 @@ declare global {
 function App() {
   const [text, setText] = React.useState('')
   const [data, setData] = React.useState({})
+  const [csrf, setCsrf] = React.useState()
   const [iframUrl, setIframeUrl] = React.useState<string | undefined>()
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
 
 
   React.useEffect(() => {
-    checktoken()
+    checktoken().then(response => {
+      console.log(response)
+      if (response && response.data && response.data.csrf) {
+        setCsrf(response.data.csrf)
+      }
+    })
     if (isWebview) {
       setIframeUrl('abc://window.testInit?query=' + encodeURI('{}'))
     }
-  }, [window.isReady])
+  }, [isWebview])
+  React.useEffect(() => {
+    if (csrf) getData(csrf).then(response => console.log(response))
+  }, [csrf])
 
   React.useEffect(() => {
     if (iframUrl && iframeRef.current) {
@@ -67,7 +83,7 @@ function App() {
           width='100%' height='100vh' src=''
           style={{ visibility: 'hidden' }}
         />
-      }      
+      }
     </>
   );
 }
