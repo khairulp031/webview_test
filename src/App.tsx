@@ -67,33 +67,7 @@ function App() {
           width='100%' height='100vh' src=''
           style={{ visibility: 'hidden' }}
         />
-      }
-      <iframe name="my_iframe"></iframe>
-      <form id="myForm"
-        encType="application/x-www-form-urlencoded"
-        action="https://www.masstracing.com/api/checktoken"
-        target="my_iframe"
-        method="GET"
-        /*onSubmit={(e) => {
-          e.preventDefault();
-          /*let myForm: any = document.getElementById('myForm');
-          let formData = new FormData(myForm);
-          var request = new XMLHttpRequest();
-          request.open("POST", "https://www.masstracing.com/api/checktoken", true);
-          request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          request.setRequestHeader('REQUEST_METHOD', 'GET');
-          request.setRequestHeader('Sec-Fetch-Mode', 'no-cors');
-          request.onreadystatechange = function (res) { console.log(res) };
-          request.send(formData);
-          return false
-          return true;
-        }}*/>
-        <label htmlFor="fname">First name:</label><br />
-        <input type="text" id="fname" name="fname" value="John" /><br />
-        <label htmlFor="lname">Last name:</label><br />
-        <input type="text" id="lname" name="lname" value="Doe" /><br /><br />
-        <input type="submit" value="Submit" />
-      </form>
+      }      
     </>
   );
 }
